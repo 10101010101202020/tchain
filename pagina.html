@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tienda de Ropa</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: black;
+            padding: 20px;
+            color: white;
+            opacity: 1;
+            transition: opacity 0.5s;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        nav ul li {
+            float: left;
+        }
+
+        nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            background-color: #333;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            padding: 10px;
+            width: 200px;
+            top: 40px;
+            left: 0;
+        }
+
+        .dropdown ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dropdown ul li a {
+            display: block;
+            color: white;
+            text-align: left;
+            padding: 6px 0;
+            text-decoration: none;
+        }
+
+        .dropdown ul li a:hover {
+            background-color: #555;
+        }
+
+        .dropdown:hover ul {
+            display: block;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 50px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .image-box {
+            width: 400px;
+            height: 400px;
+            background-color: white;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s, opacity 0.5s;
+        }
+
+        .image-box .price {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: black;
+            color: white;
+            padding: 5px;
+        }
+
+        .image-box:hover img {
+            transform: scale(1.1);
+            opacity: 0.7;
+        }
+
+        main {
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: black;
+            margin-bottom: 20px;
+        }
+
+        img.logo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 30px;
+            opacity: 1;
+            transition: opacity 0.5s;
+        }
+
+        footer {
+            background-color: black;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Efecto de desvanecimiento al arrastrar la página */
+        @keyframes fadeEffectIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeEffectOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+        }
+
+        .fade-in {
+            animation: fadeEffectIn 1s ease-in-out;
+        }
+
+        .fade-out {
+            animation: fadeEffectOut 1s ease-in-out;
+        }
+    </style>
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            var header = document.querySelector('header');
+            var imageContainer = document.querySelector('.image-container');
+            var logo = document.querySelector('.logo');
+            var footer = document.querySelector('footer');
+
+            window.addEventListener('scroll', function () {
+                var scrollPosition = window.scrollY;
+
+                if (scrollPosition > 100) {
+                    header.style.opacity = '0';
+                    logo.style.opacity = '0';
+                    footer.style.opacity = '1';
+                } else {
+                    header.style.opacity = '1';
+                    logo.style.opacity = '1';
+                    footer.style.opacity = '0';
+                }
+
+                var fadeInThreshold = imageContainer.offsetTop - window.innerHeight + 200;
+                var fadeOutThreshold = imageContainer.offsetTop + imageContainer.offsetHeight - 200;
+
+                if (scrollPosition > fadeInThreshold && scrollPosition < fadeOutThreshold) {
+                    imageContainer.classList.add('fade-in');
+                    imageContainer.classList.remove('fade-out');
+                } else {
+                    imageContainer.classList.add('fade-out');
+                    imageContainer.classList.remove('fade-in');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                    <a href="HOMBRE.html">Hombres</a>
+                    <div class="dropdown">
+                        <ul>
+                            <li><a href="#">Opción 1</a></li>
+                            <li><a href="#">Opción 2</a></li>
+                            <li><a href="#">Opción 3</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="mujeres.html">Mujeres</a>
+                    <div class="dropdown">
+                        <ul>
+                            <li><a href="#">Opción 1</a></li>
+                            <li><a href="#">Opción 2</a></li>
+                            <li><a href="#">Opción 3</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="calzado.html">Calzado</a>
+                    <div class="dropdown">
+                      
+                        <ul>
+                            <li><a href="#">Opción 1</a></li>
+                            <li><a href="#">Opción 2</a></li>
+                            <li><a href="#">Opción 3</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="accesorios.html">Accesorios</a>
+                    <div class="dropdown">
+                        <ul>
+                            <li><a href="#">Opción 1</a></li>
+                            <li><a href="#">Opción 2</a></li>
+                            <li><a href="#">Opción 3</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <img src="https://static.zara.net/photos///contents/mkt/spots/ss23-north-woman-join-life/subhome-xmedia-11//w/1600/IMAGE-landscape-default-fill-53c67ecf-62ae-4087-a1a7-2c575c06c8f2-default_0.jpg?ts=1679057887005" alt="Imagen de inicio" class="start-image">
+
+        <h1>TCHAIN</h1>
+        <img src="https://static.vecteezy.com/system/resources/previews/006/758/316/original/chain-link-icon-free-vector.jpg" alt="Logo de la tienda" class="logo">
+
+        <div class="image-container">
+            <div class="image-box">
+                <img src="https://static.zara.net/photos///2023/V/0/1/p/7611/689/250/2/w/508/7611689250_1_1_1.jpg?ts=1686133948078" alt="Imagen 1">
+                <span class="price">$50</span>
+            </div>
+            <div class="image-box">
+                <img src="https://static.zara.net/photos///2023/V/0/1/p/1889/162/808/2/w/508/1889162808_1_1_1.jpg?ts=1686148370858" alt="Imagen 2">
+                <span class="price">$30</span>
+            </div>
+            <div class="image-box">
+                <img src="https://static.zara.net/photos///2023/I/0/1/p/6840/242/400/22/w/508/6840242400_15_2_1.jpg?ts=1686135669945" alt="Imagen 3">
+                <span class="price">$20</span>
+            </div>
+            <div class="image-box">
+                <img src="https://static.zara.net/photos///2023/I/0/1/p/9863/242/400/17/w/750/9863242400_1_1_1.jpg?ts=1686128797829" alt="Imagen 4">
+                <span class="price">$40</span>
+            </div>
+        </div>
+
+        <img src="https://static.zara.net/photos///contents/mkt/spots/ss23-north-woman-collection/subhome-xmedia-23-2//w/1600/IMAGE-landscape-fill-10177866-8f71-49bb-a05a-eca5c1fc5053-default_0.jpg?ts=1685992041572" alt="Imagen final" class="end-image">
+    </main>
+
+    <footer>
+        <a href="#">Regresar</a>
+    </footer>
+</body>
+</html>

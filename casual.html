@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tienda de Ropa</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: black;
+            padding: 20px;
+            color: white;
+            opacity: 1;
+            transition: opacity 0.5s;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        nav ul li {
+            float: left;
+        }
+
+        nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            background-color: #333;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            padding: 10px;
+            width: 200px;
+            top: 40px;
+            left: 0;
+        }
+
+        .dropdown ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dropdown ul li a {
+            display: block;
+            color: white;
+            text-align: left;
+            padding: 6px 0;
+            text-decoration: none;
+        }
+
+        .dropdown ul li a:hover {
+            background-color: #555;
+        }
+
+        .dropdown:hover ul {
+            display: block;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 50px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .image-box {
+            width: 400px;
+            height: 400px;
+            background-color: white;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s, opacity 0.5s;
+        }
+
+        .image-box .price {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: black;
+            color: white;
+            padding: 5px;
+        }
+
+        .image-box:hover img {
+            transform: scale(1.1);
+            opacity: 0.7;
+        }
+
+        main {
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: black;
+            margin-bottom: 20px;
+        }
+
+        img.logo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 30px;
+            opacity: 1;
+            transition: opacity 0.5s;
+        }
+
+        footer {
+            background-color: black;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Animación para mostrar/ocultar los elementos al hacer scroll */
+        @keyframes fadeEffectIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeEffectOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+        }
+
+        .fade-in {
+            animation: fadeEffectIn 1s ease-in-out;
+        }
+
+        .fade-out {
+            animation: fadeEffectOut 1s ease-in-out;
+        }
+
+        /* Estilos adicionales para el efecto de aparición/desaparición de los elementos */
+        .fade-in-bottom {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .fade-in-bottom.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-out-bottom {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .fade-out-bottom.fade-out {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+    </style>
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            var header = document.querySelector('header');
+            var imageContainer = document.querySelector('.image-container');
+            var logo = document.querySelector('.logo');
+            var footer = document.querySelector('footer');
+
+            window.addEventListener('scroll', function () {
+                var scrollPosition = window.scrollY;
+
+                if (scrollPosition > 100) {
+                    header.style.opacity = '0';
+                    logo.style.opacity = '0';
+                    footer.style.opacity = '1';
+                } else {
+                    header.style.opacity = '1';
+                    logo.style.opacity = '1';
+                    footer.style.opacity = '0';
+                }
+
+                var fadeInThreshold = imageContainer.offsetTop - window.innerHeight + 200;
+                var fadeOutThreshold = imageContainer.offsetTop + imageContainer.offsetHeight - 200;
+
+                if (scrollPosition > fadeInThreshold && scrollPosition < fadeOutThreshold) {
+                    imageContainer.classList.add('fade-in');
+                    imageContainer.classList.remove('fade-out');
+                } else {
+                    imageContainer.classList.add('fade-out');
+                    imageContainer.classList.remove('fade-in');
+                }
+            });
+        });
+
+        function toggleDropdown(event) {
+            event.preventDefault();
+            var dropdown = event.target.nextElementSibling;
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            } else {
+                dropdown.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#" onclick="toggleDropdown(event)"></a>
+                    <div class="dropdown">
+                        <ul>
+                            <li><a href="#">Opción 1</a></li>
+                            <li><a href="#">Opción 2</a></li>
+                            <li><a href="#">Opción 3</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" onclick="toggleDropdown(event)"></a>
+                    <div class="dropdown">
+                        <ul>
+                            <li><a href="#">Opción 1</a></li>
+                            <li><a href="#">Opción 2</a></li>
+                            <li><a href="#">Opción 3</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" onclick="toggleDropdown(event)"></a>
+                    <div class="dropdown">
+                        <ul>
+                            <li><a href="#">Opción 1</a></li>
+                            <li><a href="#">Opción 2</a></li>
+                            <li><a href="#">Opción 3</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" onclick="toggleDropdown(event)"></a>
+                    <div class="dropdown">
+                        <ul>
+                            <li><a href="#">Opción 1</a></li>
+                            <li><a href="#">Opción 2</a></li>
+                            <li><a href="#">Opción 3</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <img src="https://static.zara.net/photos///2023/V/0/1/p/6427/015/050/2/w/488/6427015050_1_1_1.jpg?ts=1684488704505" alt="Imagen de inicio" class="start-image">
+
+        <h1>TCHAIN</h1>
+        <img src="https://t3.ftcdn.net/jpg/05/16/70/62/360_F_516706283_8ChNbPGGELdbdFGL98FEkDDkKC2DiPDF.jpg" alt="Logo de la tienda" class="logo fade-in-bottom">
+
+        <div class="image-container fade-in-bottom">
+            <div class="image-box">
+                <img src="https://static.zara.net/photos///2023/I/0/1/p/6895/003/712/2/w/488/6895003712_1_1_1.jpg?ts=1686153251556" alt="Imagen 1">
+                <span class="price">$50</span>
+            </div>
+            <div class="image-box">
+                <img src="https://static.zara.net/photos///2023/V/0/1/p/3991/025/712/12/w/488/3991025712_1_1_1.jpg?ts=1686123720272" alt="Imagen 2">
+                <span class="price">$30</span>
+            </div>
+            <div class="image-box">
+                <img src="https://static.zara.net/photos///2023/V/0/1/p/6771/076/401/2/w/488/6771076401_2_2_1.jpg?ts=1680707514652" alt="Imagen 3">
+                <span class="price">$20</span>
+            </div>
+            <div class="image-box">
+                <img src="https://static.zara.net/photos///2023/V/0/1/p/6427/019/303/2/w/488/6427019303_2_1_1.jpg?ts=1685521761697" alt="Imagen 4">
+                <span class="price">$40</span>
+            </div>
+        </div>
+        <div class="image-box">
+            <img src="https://static.zara.net/photos///2023/V/0/1/p/0234/003/070/2/w/488/0234003070_1_1_1.jpg?ts=1681826067348" alt="Imagen 4">
+            <span class="price">$40</span>
+        </div>
+
+        <img src="https://static.zara.net/photos///2023/V/0/1/p/5802/074/746/2/w/488/5802074746_1_1_1.jpg?ts=1684925237868" alt="Imagen final" class="end-image">
+    </main>
+
+    <footer>
+        <a href="mujeres.html">Regresar</a>
+    </footer>
+</body>
+</html>
